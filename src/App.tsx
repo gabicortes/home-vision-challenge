@@ -1,10 +1,11 @@
-import { useEffect, useMemo, useRef } from 'react'
-import { useInfiniteHouses } from './api/houses'
-import { AppHeader } from './components/AppHeader/AppHeader'
-import { CardGrid } from './components/CardGrid/CardGrid'
+import { useEffect, useMemo, useRef } from "react";
+import { LoaderCircle } from "lucide-react";
+import { useInfiniteHouses } from "./api/houses";
+import { AppHeader } from "./components/AppHeader/AppHeader";
+import { CardGrid } from "./components/CardGrid/CardGrid";
 
 function App() {
-  const sentinelRef = useRef<HTMLDivElement | null>(null)
+  const sentinelRef = useRef<HTMLDivElement | null>(null);
 
   const {
     data,
@@ -15,41 +16,56 @@ function App() {
     hasNextPage,
     fetchNextPage,
     refetch,
-  } = useInfiniteHouses()
+    failureCount,
+  } = useInfiniteHouses();
 
-  const items = useMemo(() => data?.pages.flatMap((page) => page) ?? [], [data])
+  const items = useMemo(
+    () => data?.pages.flatMap((page) => page) ?? [],
+    [data],
+  );
+  const isRetrying =
+    !isError && (isPending || isFetchingNextPage) && failureCount > 0;
 
   useEffect(() => {
-    const sentinel = sentinelRef.current
+    const sentinel = sentinelRef.current;
     if (!sentinel) {
-      return
+      return;
     }
 
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0]?.isIntersecting && hasNextPage && !isFetchingNextPage) {
-          void fetchNextPage()
+          void fetchNextPage();
         }
       },
-      { rootMargin: '220px' },
-    )
+      { rootMargin: "220px" },
+    );
 
-    observer.observe(sentinel)
-    return () => observer.disconnect()
-  }, [fetchNextPage, hasNextPage, isFetchingNextPage])
+    observer.observe(sentinel);
+    return () => observer.disconnect();
+  }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
   return (
-    <div className="min-h-screen bg-background-page">
+    <div className="min-h-screen bg-cream-50">
       <AppHeader />
-      <main className="mx-auto w-full max-w-[1400px] px-5 pt-6 pb-8">
+      <main className="mx-auto w-full max-w-[1400px]">
+        {isRetrying && (
+          <div className="mb-6 flex items-center gap-3 rounded-2xl border border-neutral-280 bg-neutral-0 px-5 py-5 text-neutral-800">
+            <LoaderCircle className="size-5 animate-spin text-blue-500" />
+            <p className="m-0 text-body font-semibold">
+              Retrying ({Math.min(failureCount, 5)}/5)...
+            </p>
+          </div>
+        )}
+
         {isPending && (
           <div className="flex min-h-[60vh] items-center justify-center">
             <div className="flex flex-col items-center gap-3">
               <span
-                className="size-8 animate-spin rounded-full border-2 border-border-subtle border-t-text-brand"
+                className="size-8 animate-spin rounded-full border-2 border-neutral-260 border-t-blue-600"
                 aria-hidden="true"
               />
-              <p className="text-center text-body text-text-secondary">
+              <p className="text-center text-body text-neutral-700">
                 We're loading the house of your dreams...
               </p>
             </div>
@@ -59,23 +75,23 @@ function App() {
         {!isPending && <CardGrid items={items} />}
 
         {isFetchingNextPage && !isPending && (
-          <p className="mt-5 text-center text-body text-text-secondary">
+          <p className="mt-5 text-center text-body text-neutral-700">
             Loading more houses...
           </p>
         )}
 
         {isError && (
-          <div className="mx-auto mt-5 max-w-xl rounded-sm border border-border-subtle bg-background-surface p-4 text-center">
-            <p className="m-0 text-body text-text-primary">
+          <div className="mx-auto mt-5 max-w-xl rounded-sm border border-neutral-260 bg-neutral-0 p-4 text-center">
+            <p className="m-0 text-body text-neutral-900">
               {error instanceof Error
                 ? error.message
-                : 'Unexpected error loading houses.'}
+                : "Unexpected error loading houses."}
             </p>
             <button
               type="button"
-              className="mt-3 rounded-sm border border-border-subtle px-4 py-2 text-small font-semibold text-text-primary transition hover:bg-background-page"
+              className="mt-3 rounded-sm border border-neutral-260 px-4 py-2 text-small font-semibold text-neutral-900 transition hover:bg-neutral-50"
               onClick={() => {
-                void refetch()
+                void refetch();
               }}
             >
               Retry
@@ -84,13 +100,13 @@ function App() {
         )}
 
         {!isPending && !isError && items.length === 0 && (
-          <p className="mt-5 text-center text-body text-text-secondary">
+          <p className="mt-5 text-center text-body text-neutral-700">
             No listings available.
           </p>
         )}
 
         {!isFetchingNextPage && !hasNextPage && items.length > 0 && (
-          <p className="mt-5 text-center text-body text-text-secondary">
+          <p className="mt-5 text-center text-body text-neutral-700">
             You reached the end of the listings.
           </p>
         )}
@@ -98,7 +114,7 @@ function App() {
         <div ref={sentinelRef} aria-hidden="true" className="h-1 w-full" />
       </main>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

@@ -15,13 +15,13 @@ export const Card = ({ item, index }: CardProps) => {
   const isAboveFold = index < 3;
 
   return (
-    <article className="overflow-hidden rounded-lg border border-border-subtle bg-background-surface shadow-card">
+    <article className="overflow-hidden rounded-2xl bg-white shadow-soft-lg">
       <div className="relative h-[230px] w-full overflow-hidden">
         {!imageLoaded && (
           <div className="absolute inset-0 animate-pulse bg-slate-200" />
         )}
         <img
-          className={`block h-[230px] w-full object-cover transition-opacity duration-300 ${imageLoaded ? "opacity-100" : "opacity-0"}`}
+          className={`block h-[230px] w-full object-cover transition-opacity duration-300 bg-neutral-50 ${imageLoaded ? "opacity-100" : "opacity-0"}`}
           src={item.photoURL}
           alt={`House at ${item.address}`}
           width={800}
@@ -43,25 +43,25 @@ export const Card = ({ item, index }: CardProps) => {
           }}
         />
       </div>
-      <div className="p-4">
-        <p className="m-0 flex items-start gap-2 text-subtitle font-semibold text-text-primary">
+      <div className="p-5">
+        <p className="m-0 flex items-start gap-2 text-subtitle text-neutral-850 font-extrabold">
           <MapPin
             aria-hidden="true"
-            className="size-4 shrink-0 text-text-secondary"
+            className="mt-1 size-4 shrink-0 text-neutral-500"
           />
           <span>{item.address}</span>
         </p>
-        <p className="mt-2 m-0 flex items-start gap-2 text-body font-medium text-text-secondary">
+        <p className="mt-3 m-0 flex items-start gap-2 text-small text-neutral-500">
           <UserRound
             aria-hidden="true"
-            className="size-4 shrink-0 text-text-secondary"
+            className="mt-0.5 size-4 shrink-0 text-neutral-400"
           />
           <span>{item.homeowner}</span>
         </p>
-        <p className="mt-2 m-0 flex items-center gap-2 text-price leading-[1.1] font-bold text-success">
+        <p className="mt-3 m-0 flex items-center gap-2 text-price leading-[1.1] font-bold text-green-600">
           <DollarSign
             aria-hidden="true"
-            className="size-4 shrink-0 text-success"
+            className="size-4 shrink-0 text-green-600"
           />
           <span>{item.price}</span>
         </p>

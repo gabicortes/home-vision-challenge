@@ -4,13 +4,36 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        'background-page': '#f3f4f6',
-        'background-surface': '#ffffff',
-        'border-subtle': '#d1d5db',
-        'text-primary': '#111827',
-        'text-secondary': '#6b7280',
-        'text-brand': '#1d4ed8',
-        success: '#16a34a',
+        cream: {
+          50: '#f8f3ec',
+        },
+        neutral: {
+          0: '#ffffff',
+          25: '#f9fbff',
+          50: '#f3f4f6',
+          150: '#e8ecf4',
+          220: '#e2e6ef',
+          240: '#dce2ee',
+          260: '#d1d5db',
+          280: '#cfd8eb',
+          400: '#a7afc0',
+          500: '#8a93a8',
+          700: '#6b7280',
+          800: '#25324a',
+          850: '#1f2940',
+          900: '#111827',
+        },
+        blue: {
+          100: '#e8f0ff',
+          500: '#4f86ff',
+          600: '#1d4ed8',
+          950: '#172554',
+        },
+        green: {
+          100: '#e9f8ef',
+          600: '#16a34a',
+          700: '#2b8a4d',
+        },
       },
       borderRadius: {
         xs: '4px',
@@ -26,7 +49,8 @@ const config: Config = {
         price: '1.875rem',
       },
       boxShadow: {
-        card: '0 2px 4px rgba(17, 24, 39, 0.06), 0 8px 24px rgba(17, 24, 39, 0.05)',
+        'soft-md': '0 2px 4px rgba(17, 24, 39, 0.06), 0 8px 24px rgba(17, 24, 39, 0.05)',
+        'soft-lg': '0 6px 20px rgba(15, 23, 42, 0.06)',
       },
       fontFamily: {
         sans: [
