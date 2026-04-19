@@ -11,8 +11,8 @@ export const CardGrid = ({ items }: CardGridProps) => {
       className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3"
       aria-label="House listings"
     >
-      {items.map((item) => (
-        <Card key={item.id} item={item} />
+      {items.map((item, index) => (
+        <Card key={item.id} item={item} index={index} />
       ))}
     </section>
   );

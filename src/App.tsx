@@ -42,11 +42,25 @@ function App() {
     <div className="min-h-screen bg-background-page">
       <AppHeader />
       <main className="mx-auto w-full max-w-[1400px] px-5 pt-6 pb-8">
-        <CardGrid items={items} />
+        {isPending && (
+          <div className="flex min-h-[60vh] items-center justify-center">
+            <div className="flex flex-col items-center gap-3">
+              <span
+                className="size-8 animate-spin rounded-full border-2 border-border-subtle border-t-text-brand"
+                aria-hidden="true"
+              />
+              <p className="text-center text-body text-text-secondary">
+                We're loading the house of your dreams...
+              </p>
+            </div>
+          </div>
+        )}
 
-        {(isPending || isFetchingNextPage) && (
+        {!isPending && <CardGrid items={items} />}
+
+        {isFetchingNextPage && !isPending && (
           <p className="mt-5 text-center text-body text-text-secondary">
-            Loading listings...
+            Loading more houses...
           </p>
         )}
 
