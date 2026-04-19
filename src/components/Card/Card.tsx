@@ -10,6 +10,7 @@ const formatter = new Intl.NumberFormat("en-US", {
   currency: "USD",
   maximumFractionDigits: 0,
 });
+const FALLBACK_IMAGE_URL = "https://placehold.co/800x500?text=Image+Unavailable";
 
 export const Card = ({ item }: CardProps) => {
   return (
@@ -19,6 +20,9 @@ export const Card = ({ item }: CardProps) => {
         src={item.photoURL}
         alt={`House at ${item.address}`}
         loading="lazy"
+        onError={(event) => {
+          event.currentTarget.src = FALLBACK_IMAGE_URL;
+        }}
       />
 
       <div className="p-4">
