@@ -21,7 +21,7 @@ export const Card = ({ item, index }: CardProps) => {
           <div className="absolute inset-0 animate-pulse bg-slate-200" />
         )}
         <img
-          className={`block h-[230px] w-full object-cover transition-opacity duration-300 bg-neutral-50 ${imageLoaded ? "opacity-100" : "opacity-0"}`}
+          className={`block h-[230px] w-full origin-center object-cover bg-neutral-50 transform-gpu transition-opacity duration-300 ${imageLoaded ? "opacity-100 transition-transform duration-500 ease-out hover:scale-[1.015]" : "opacity-0"}`}
           src={item.photoURL}
           alt={`House at ${item.address}`}
           width={800}
@@ -44,7 +44,7 @@ export const Card = ({ item, index }: CardProps) => {
         />
       </div>
       <div className="p-5">
-        <p className="m-0 flex items-start gap-2 text-subtitle text-neutral-850 font-extrabold">
+        <p className="m-0 flex items-start gap-2 text-title text-neutral-850 font-extrabold">
           <MapPin
             aria-hidden="true"
             className="mt-1 size-4 shrink-0 text-neutral-500"
@@ -58,7 +58,7 @@ export const Card = ({ item, index }: CardProps) => {
           />
           <span>{item.homeowner}</span>
         </p>
-        <p className="mt-3 m-0 flex items-center gap-2 text-price leading-[1.1] font-bold text-green-600">
+        <p className="mt-3 m-0 flex items-center gap-2 text-price leading-[1.1] font-extrabold text-green-600">
           <DollarSign
             aria-hidden="true"
             className="size-4 shrink-0 text-green-600"
