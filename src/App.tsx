@@ -99,7 +99,7 @@ function App() {
         />
 
         {isRetrying && (
-          <div className="mb-6 flex items-center gap-3 rounded-2xl border border-neutral-280 bg-neutral-0 px-5 py-5 text-neutral-800">
+          <div className="mb-6 flex items-center gap-3 rounded-2xl px-5 py-5 text-neutral-800">
             <LoaderCircle className="size-5 animate-spin text-blue-500" />
             <p className="m-0 text-body font-semibold">
               Retrying ({Math.min(failureCount, 5)}/5)...
