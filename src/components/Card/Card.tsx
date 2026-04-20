@@ -56,21 +56,21 @@ export const Card = ({ item, index }: CardProps) => {
           <p className="m-0 flex items-start gap-2 text-title text-neutral-850 font-extrabold">
             <MapPin
               aria-hidden="true"
-              className="mt-1 size-4 shrink-0 text-neutral-500"
+              className="mt-1 size-4 shrink-0 text-neutral-700"
             />
             <span>{item.address}</span>
           </p>
-          <p className="mt-3 m-0 flex items-start gap-2 text-small text-neutral-500">
+          <p className="mt-3 m-0 flex items-start gap-2 text-small text-neutral-700">
             <UserRound
               aria-hidden="true"
-              className="mt-0.5 size-4 shrink-0 text-neutral-400"
+              className="mt-0.5 size-4 shrink-0 text-neutral-700"
             />
             <span>{item.homeowner}</span>
           </p>
-          <p className="mt-3 m-0 flex items-center gap-2 text-price leading-[1.1] font-extrabold text-green-600">
+          <p className="mt-3 m-0 flex items-center gap-2 text-price leading-[1.1] font-extrabold text-green-800">
             <DollarSign
               aria-hidden="true"
-              className="size-4 shrink-0 text-green-600"
+              className="size-4 shrink-0 text-green-800"
             />
             <span>{formattedPrice}</span>
           </p>

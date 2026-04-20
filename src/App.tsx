@@ -114,7 +114,7 @@ function App() {
                 className="size-8 animate-spin rounded-full border-2 border-neutral-260 border-t-blue-600"
                 aria-hidden="true"
               />
-              <p className="text-center text-body text-neutral-700">
+              <p className="text-center text-body text-neutral-800">
                 We're loading the house of your dreams...
               </p>
             </div>
@@ -124,7 +124,7 @@ function App() {
         {!isPending && <CardGrid items={filteredItems} />}
 
         {isFetchingNextPage && !isPending && (
-          <p className="mt-5 text-center text-body text-neutral-700">
+          <p className="mt-5 text-center text-body text-neutral-800">
             Loading more houses...
           </p>
         )}
@@ -149,7 +149,7 @@ function App() {
         )}
 
         {!isPending && !isError && items.length === 0 && (
-          <p className="mt-5 text-center text-body text-neutral-700">
+          <p className="mt-5 text-center text-body text-neutral-800">
             No listings available.
           </p>
         )}
@@ -159,13 +159,13 @@ function App() {
           hasPriceFilter &&
           items.length > 0 &&
           filteredItems.length === 0 && (
-            <p className="mt-5 text-center text-body text-neutral-700">
+            <p className="mt-5 text-center text-body text-neutral-800">
               No listings match your price range.
             </p>
           )}
 
         {!isFetchingNextPage && !hasNextPage && filteredItems.length > 0 && (
-          <p className="mt-5 text-center text-body text-neutral-700">
+          <p className="mt-5 text-center text-body text-neutral-800">
             You reached the end of the listings.
           </p>
         )}
