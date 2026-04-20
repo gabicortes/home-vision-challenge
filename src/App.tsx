@@ -4,6 +4,7 @@ import { useInfiniteHouses } from "./api/houses";
 import { AppHeader } from "./components/AppHeader/AppHeader";
 import { CardGrid } from "./components/CardGrid/CardGrid";
 import { PriceFilter } from "./components/PriceFilter/PriceFilter";
+import { useDebounce } from "./hooks/useDebounce";
 
 function App() {
   const sentinelRef = useRef<HTMLDivElement | null>(null);
@@ -26,8 +27,18 @@ function App() {
     () => data?.pages.flatMap((page) => page) ?? [],
     [data],
   );
-  const minPrice = minPriceInput.trim() === "" ? null : Number(minPriceInput);
-  const maxPrice = maxPriceInput.trim() === "" ? null : Number(maxPriceInput);
+  const debouncedMinPriceInput = useDebounce(minPriceInput, 300);
+  const debouncedMaxPriceInput = useDebounce(maxPriceInput, 300);
+
+  const minPrice =
+    debouncedMinPriceInput.trim() === ""
+      ? null
+      : Number(debouncedMinPriceInput);
+  const maxPrice =
+    debouncedMaxPriceInput.trim() === ""
+      ? null
+      : Number(debouncedMaxPriceInput);
+
   const hasValidMinPrice = minPrice !== null && Number.isFinite(minPrice);
   const hasValidMaxPrice = maxPrice !== null && Number.isFinite(maxPrice);
   const hasPriceFilter = hasValidMinPrice || hasValidMaxPrice;
@@ -45,6 +56,7 @@ function App() {
       }),
     [hasValidMaxPrice, hasValidMinPrice, items, maxPrice, minPrice],
   );
+
   const isRetrying =
     !isError && (isPending || isFetchingNextPage) && failureCount > 0;
 
@@ -70,7 +82,11 @@ function App() {
   return (
     <div className="min-h-screen bg-cream-50">
       <AppHeader />
+
       <main className="mx-auto w-full max-w-[1400px] p-12">
+        <h1 className="text-5xl font-bold text-center pb-8">
+          Let's find your dream home
+        </h1>
         <PriceFilter
           minPriceInput={minPriceInput}
           maxPriceInput={maxPriceInput}

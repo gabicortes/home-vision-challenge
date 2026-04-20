@@ -42,10 +42,10 @@ export const PriceFilter = ({
         </label>
         <button
           type="button"
-          className={`rounded-2xl border border-neutral-260 px-4 py-2 text-small font-semibold text-neutral-900 transition ${
+          className={`rounded-2xl bg-blue-600 px-4 py-2 text-small font-semibold text-white transition ${
             isClearDisabled
               ? "cursor-not-allowed opacity-50"
-              : "hover:bg-neutral-50"
+              : "hover:bg-blue-700"
           }`}
           disabled={isClearDisabled}
           onClick={onClear}
