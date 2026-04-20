@@ -1,11 +1,14 @@
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { LoaderCircle } from "lucide-react";
 import { useInfiniteHouses } from "./api/houses";
 import { AppHeader } from "./components/AppHeader/AppHeader";
 import { CardGrid } from "./components/CardGrid/CardGrid";
+import { PriceFilter } from "./components/PriceFilter/PriceFilter";
 
 function App() {
   const sentinelRef = useRef<HTMLDivElement | null>(null);
+  const [minPriceInput, setMinPriceInput] = useState("");
+  const [maxPriceInput, setMaxPriceInput] = useState("");
 
   const {
     data,
@@ -22,6 +25,25 @@ function App() {
   const items = useMemo(
     () => data?.pages.flatMap((page) => page) ?? [],
     [data],
+  );
+  const minPrice = minPriceInput.trim() === "" ? null : Number(minPriceInput);
+  const maxPrice = maxPriceInput.trim() === "" ? null : Number(maxPriceInput);
+  const hasValidMinPrice = minPrice !== null && Number.isFinite(minPrice);
+  const hasValidMaxPrice = maxPrice !== null && Number.isFinite(maxPrice);
+  const hasPriceFilter = hasValidMinPrice || hasValidMaxPrice;
+
+  const filteredItems = useMemo(
+    () =>
+      items.filter((item) => {
+        const matchesMin = hasValidMinPrice
+          ? item.price >= (minPrice as number)
+          : true;
+        const matchesMax = hasValidMaxPrice
+          ? item.price <= (maxPrice as number)
+          : true;
+        return matchesMin && matchesMax;
+      }),
+    [hasValidMaxPrice, hasValidMinPrice, items, maxPrice, minPrice],
   );
   const isRetrying =
     !isError && (isPending || isFetchingNextPage) && failureCount > 0;
@@ -48,7 +70,18 @@ function App() {
   return (
     <div className="min-h-screen bg-cream-50">
       <AppHeader />
-      <main className="mx-auto w-full max-w-[1400px]">
+      <main className="mx-auto w-full max-w-[1400px] p-12">
+        <PriceFilter
+          minPriceInput={minPriceInput}
+          maxPriceInput={maxPriceInput}
+          onMinPriceChange={setMinPriceInput}
+          onMaxPriceChange={setMaxPriceInput}
+          onClear={() => {
+            setMinPriceInput("");
+            setMaxPriceInput("");
+          }}
+        />
+
         {isRetrying && (
           <div className="mb-6 flex items-center gap-3 rounded-2xl border border-neutral-280 bg-neutral-0 px-5 py-5 text-neutral-800">
             <LoaderCircle className="size-5 animate-spin text-blue-500" />
@@ -72,7 +105,7 @@ function App() {
           </div>
         )}
 
-        {!isPending && <CardGrid items={items} />}
+        {!isPending && <CardGrid items={filteredItems} />}
 
         {isFetchingNextPage && !isPending && (
           <p className="mt-5 text-center text-body text-neutral-700">
@@ -105,7 +138,17 @@ function App() {
           </p>
         )}
 
-        {!isFetchingNextPage && !hasNextPage && items.length > 0 && (
+        {!isPending &&
+          !isError &&
+          hasPriceFilter &&
+          items.length > 0 &&
+          filteredItems.length === 0 && (
+            <p className="mt-5 text-center text-body text-neutral-700">
+              No listings match your price range.
+            </p>
+          )}
+
+        {!isFetchingNextPage && !hasNextPage && filteredItems.length > 0 && (
           <p className="mt-5 text-center text-body text-neutral-700">
             You reached the end of the listings.
           </p>
