@@ -84,7 +84,7 @@ function App() {
       <AppHeader />
 
       <main className="mx-auto w-full max-w-[1400px] p-12">
-        <h1 className="text-5xl font-bold text-center pb-8">
+        <h1 className="text-5xl font-bold text-center md:pt-12 md:pb-20 pt-6 pb-12">
           Let's find your dream home
         </h1>
         <PriceFilter

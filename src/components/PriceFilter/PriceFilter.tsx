@@ -25,7 +25,7 @@ export const PriceFilter = ({
             min={0}
             value={minPriceInput}
             onChange={(event) => onMinPriceChange(event.target.value)}
-            className="w-full rounded-2xl border border-neutral-260 px-3 py-2 text-body text-neutral-900 placeholder:text-neutral-700 outline-none transition focus:border-blue-500"
+            className="w-full rounded-2xl border border-neutral-260 px-3 py-2 text-body text-neutral-900 placeholder:text-neutral-500 outline-none transition focus:border-blue-500"
             placeholder="e.g. 300000"
           />
         </label>
@@ -36,7 +36,7 @@ export const PriceFilter = ({
             min={0}
             value={maxPriceInput}
             onChange={(event) => onMaxPriceChange(event.target.value)}
-            className="w-full rounded-2xl border border-neutral-260 px-3 py-2 text-body text-neutral-900 placeholder:text-neutral-700 outline-none transition focus:border-blue-500"
+            className="w-full rounded-2xl border border-neutral-260 px-3 py-2 text-body text-neutral-900 placeholder:text-neutral-500 outline-none transition focus:border-blue-500"
             placeholder="e.g. 900000"
           />
         </label>
